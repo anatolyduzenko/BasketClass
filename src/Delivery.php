@@ -4,7 +4,8 @@ namespace App;
 
 class Delivery
 {
-    public function getDeliveryAmount(float $orderAmount) :float {
+    public function getDeliveryAmount(float $orderAmount) :float 
+    {
         if ($orderAmount < 50) { 
             return 4.95;
         } elseif ($orderAmount >= 50 && $orderAmount < 90) {  
