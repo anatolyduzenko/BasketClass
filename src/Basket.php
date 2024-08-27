@@ -10,16 +10,18 @@ use Exception;
 class Basket
 {
     private $items = [];
-    private $widgets = [];
+    protected $widgets = [];
     private $specialOffers = [];
+    protected $delivery;
 
-    public function __construct() {
+    public function __construct(RedWidget $red, GreenWidget $green, BlueWidget $blue, Delivery $delivery) {
         $this->widgets = [
-            'R01' => new RedWidget,
-            'G01' => new GreenWidget,
-            'B01' => new BlueWidget
+            $red->getCode() => $red,
+            $green->getCode() => $green,
+            $blue->getCode() => $blue
         ];
-        $this->specialOffers = ['R01'];
+        $this->delivery = $delivery;
+        $this->specialOffers = [$red->getCode()];
     }
 
     public function addProduct(string $code) :void
@@ -49,8 +51,7 @@ class Basket
             }
         }
         
-        $delivery = new Delivery();
-        $total += $delivery->getDeliveryAmount($total);
+        $total += $this->delivery->getDeliveryAmount($total);
 
         return round($total, 2, PHP_ROUND_HALF_DOWN);
     }
