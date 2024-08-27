@@ -28,12 +28,13 @@ The Basket class requires instances of RedWidget, GreenWidget, BlueWidget, and D
 
 ### Methods
 
-* <b>addProduct(string $code)</b>: Adds a product to the basket based on the product code.
-* <b>totalCost()</b>: Calculates the total cost of all items in the basket, including special offers and delivery charges.
-* <b>getItems()</b>: Returns the list of items currently in the basket.
+* **addProduct(string $code)**: Adds a product to the basket based on the product code.
+* **totalCost()**: Calculates the total cost of all items in the basket, including special offers and delivery charges.
+* **getItems()**: Returns the list of items currently in the basket.
 
 ## Example Usage
 
+```php
     <?php
     use App\Basket;
     use App\Widgets\RedWidget;
@@ -61,6 +62,7 @@ The Basket class requires instances of RedWidget, GreenWidget, BlueWidget, and D
 
     // Calculate total cost
     echo "Total cost: $" . $basket->totalCost() . "\n";`
+```
 
 ## Testing
 
