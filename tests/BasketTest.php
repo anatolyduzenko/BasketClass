@@ -2,7 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 use App\Basket;
-use App\Delivery;
+use App\Services\Delivery;
 use App\Widgets\RedWidget;
 use App\Widgets\GreenWidget;
 use App\Widgets\BlueWidget;
@@ -13,13 +13,18 @@ class BasketTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->basket = new Basket(new RedWidget, new GreenWidget, new BlueWidget, new Delivery);
+        $redWidget = new RedWidget();
+        $greenWidget = new GreenWidget();
+        $blueWidget = new BlueWidget();
+        $delivery = new Delivery();
+
+        $this->basket = new Basket($delivery, [$redWidget, $greenWidget, $blueWidget]);
     }
 
     public function testAddProductWithValidCode()
     {
         $this->basket->addProduct('R01');
-        $this->assertCount(1, $this->basket->getItems());
+        $this->assertCount(1, $this->basket->getProducts());
     }
 
     public function testAddProductWithInvalidCode()
@@ -64,12 +69,12 @@ class BasketTest extends TestCase
         $this->assertEquals(round($expectedTotal, 2), $this->basket->totalCost());
     }
 
-    public function testGetItems()
+    public function testGetProducts()
     {
         $this->basket->addProduct('R01');
         $this->basket->addProduct('G01');
 
-        $items = $this->basket->getItems();
+        $items = $this->basket->getProducts();
         $this->assertCount(2, $items);
         $this->assertInstanceOf(RedWidget::class, $items[0]);
         $this->assertInstanceOf(GreenWidget::class, $items[1]);

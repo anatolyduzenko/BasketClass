@@ -36,32 +36,28 @@ The Basket class requires instances of RedWidget, GreenWidget, BlueWidget, and D
 
 ```php
     <?php
+
     use App\Basket;
     use App\Widgets\RedWidget;
     use App\Widgets\GreenWidget;
     use App\Widgets\BlueWidget;
-    use App\Delivery;
+    use App\Services\Delivery;
 
     require 'vendor/autoload.php';
 
-    // Create widget instances
     $redWidget = new RedWidget();
     $greenWidget = new GreenWidget();
     $blueWidget = new BlueWidget();
-
-    // Create delivery instance
     $delivery = new Delivery();
 
-    // Create Basket instance
-    $basket = new Basket($redWidget, $greenWidget, $blueWidget, $delivery);
+    $basket = new Basket($delivery, [$redWidget, $greenWidget, $blueWidget]);
 
-    // Add products to basket
-    $basket->addProduct('R01'); // Add RedWidget
-    $basket->addProduct('G01'); // Add GreenWidget
-    $basket->addProduct('B01'); // Add BlueWidget
+    $basket->addProduct('R01');
+    $basket->addProduct('G01');
+    $basket->addProduct('B01');
 
-    // Calculate total cost
-    echo "Total cost: $" . $basket->totalCost() . "\n";`
+    echo "Total cost: $" . $basket->totalCost() . "\n";
+
 ```
 
 ## Testing

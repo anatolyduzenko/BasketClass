@@ -2,14 +2,24 @@
 
 namespace App\Widgets;
 
-use App\Product;
+use App\Contracts\WidgetInterface;
 
-class BlueWidget extends Product
+class BlueWidget implements WidgetInterface
 {
     
-    public function __construct() {
-        $this->code = 'B01';
-        $this->price = 7.95;
+    public function getCode(): string
+    {
+        return 'B01';
+    }
+
+    public function getPrice(): float
+    {
+        return 7.95; 
+    }
+
+    public function getDiscountedPrice(): float
+    {
+        return 3.97; 
     }
 
 }

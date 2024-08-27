@@ -2,14 +2,24 @@
 
 namespace App\Widgets;
 
-use App\Product;
+use App\Contracts\WidgetInterface;
 
-class RedWidget extends Product
+class RedWidget implements WidgetInterface
 {
     
-    public function __construct() {
-        $this->code = 'R01';
-        $this->price = 32.95;
+    public function getCode(): string
+    {
+        return 'R01';
+    }
+
+    public function getPrice(): float
+    {
+        return 32.95; 
+    }
+
+    public function getDiscountedPrice(): float
+    {
+        return 16.47; 
     }
 
 }

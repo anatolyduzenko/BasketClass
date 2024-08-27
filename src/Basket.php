@@ -2,26 +2,26 @@
 
 namespace App;
 
-use App\Widgets\BlueWidget;
-use App\Widgets\GreenWidget;
-use App\Widgets\RedWidget;
+use App\Contracts\BasketInterface;
+use App\Contracts\WidgetInterface;
+use App\Contracts\DeliveryInterface;
 use Exception;
 
-class Basket
+class Basket implements BasketInterface
 {
     private $items = [];
     protected $widgets = [];
     private $specialOffers = [];
     protected $delivery;
 
-    public function __construct(RedWidget $red, GreenWidget $green, BlueWidget $blue, Delivery $delivery) {
-        $this->widgets = [
-            $red->getCode() => $red,
-            $green->getCode() => $green,
-            $blue->getCode() => $blue
-        ];
+    public function __construct(DeliveryInterface $delivery, array $widgets) {
+        foreach ($widgets as $widget) {
+            if ($widget instanceof WidgetInterface) {
+                $this->widgets[$widget->getCode()] = $widget;
+            }
+        }
         $this->delivery = $delivery;
-        $this->specialOffers = [$red->getCode()];
+        $this->specialOffers = ['R01'];
     }
 
     public function addProduct(string $code) :void
@@ -56,7 +56,7 @@ class Basket
         return round($total, 2, PHP_ROUND_HALF_DOWN);
     }
 
-    public function getItems() :array 
+    public function getProducts(): array
     {
         return $this->items;
     }
